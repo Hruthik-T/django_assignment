@@ -9,8 +9,8 @@ Follow these steps to run the e-commerce project:
 ### 1. Clone the repository
 
 ```bash
-git clone [<repository-url>](https://github.com/Hruthik-T/django_assignment.git)
-cd <repository-name>
+git clone https://github.com/Hruthik-T/django_assignment.git
+cd django_assignment
 ```
 
 ### 2. Navigate to the project directory
