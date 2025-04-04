@@ -1,0 +1,84 @@
+{% extends 'products/base.html' %}
+
+{% block title %}Product Catalog{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Filter Sidebar -->
+    <div class="col-md-3 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Search & Filter</h4>
+            </div>
+            <div class="card-body">
+                <form method="get">
+                    <!-- Search input -->
+                    <div class="mb-3">
+                        <label for="id_search" class="form-label">Search:</label>
+                        {{ form.search }}
+                    </div>
+                    
+                    <!-- Category filter -->
+                    <div class="mb-3">
+                        <label for="id_category" class="form-label">Category:</label>
+                        {{ form.category }}
+                    </div>
+                    
+                    <!-- Tags filter -->
+                    <div class="mb-3">
+                        <label for="id_tags" class="form-label">Tags:</label>
+                        {{ form.tags }}
+                        <div class="form-text">Hold Ctrl/Cmd to select multiple tags</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    
+                    {% if request.GET %}
+                        <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary w-100 mt-2">Clear Filters</a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product List -->
+    <div class="col-md-9">
+        <h2 class="mb-4">Products</h2>
+        
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">${{ product.price }}</h6>
+                                <p class="card-text text-truncate">{{ product.description }}</p>
+                                <p class="card-text"><strong>Category:</strong> {{ product.category.name }}</p>
+                                <div class="mb-2">
+                                    {% for tag in product.tags.all %}
+                                        <span class="badge bg-secondary tag-badge">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        {% if product.is_available %}
+                                            <span class="text-success">In Stock</span>
+                                        {% else %}
+                                            <span class="text-danger">Out of Stock</span>
+                                        {% endif %}
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                No products found matching your filters. Please try different search criteria.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
