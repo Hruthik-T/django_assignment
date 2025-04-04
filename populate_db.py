@@ -3,14 +3,11 @@ import django
 import random
 from decimal import Decimal
 
-# Setup Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce_project.settings')
 django.setup()
 
-# Import models
 from products.models import Category, Tag, Product
 
-# Create Categories
 def create_categories():
     categories = [
         {'name': 'Electronics', 'description': 'Electronic devices and accessories'},
@@ -29,7 +26,6 @@ def create_categories():
     
     return created_categories
 
-# Create Tags
 def create_tags():
     tags = [
         {'name': 'Sale'},
@@ -54,7 +50,6 @@ def create_tags():
     
     return created_tags
 
-# Create Products
 def create_products(categories, tags):
     products = [
         {
@@ -201,17 +196,11 @@ def create_products(categories, tags):
     
     created_products = []
     for product_data in products:
-        # Extract tags to add after product creation
         category = product_data.pop('category')
-        
-        # Get or create the product
-        product_data['category'] = category  # Re-add category for get_or_create
+        product_data['category'] = category 
         product, created = Product.objects.get_or_create(**product_data)
-        
-        # Add random tags to each product (2-4 tags)
         selected_tags = random.sample(tags, random.randint(2, 4))
         product.tags.set(selected_tags)
-        
         created_products.append(product)
         print(f"Product {'created' if created else 'already exists'}: {product.name}")
     
