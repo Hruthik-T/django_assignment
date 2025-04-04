@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="row">
-    <!-- Filter Sidebar -->
     <div class="col-md-3 mb-4">
         <div class="card">
             <div class="card-header bg-primary text-white">
@@ -12,19 +11,14 @@
             </div>
             <div class="card-body">
                 <form method="get">
-                    <!-- Search input -->
                     <div class="mb-3">
                         <label for="id_search" class="form-label">Search:</label>
                         {{ form.search }}
                     </div>
-                    
-                    <!-- Category filter -->
                     <div class="mb-3">
                         <label for="id_category" class="form-label">Category:</label>
                         {{ form.category }}
                     </div>
-                    
-                    <!-- Tags filter -->
                     <div class="mb-3">
                         <label for="id_tags" class="form-label">Tags:</label>
                         {{ form.tags }}
